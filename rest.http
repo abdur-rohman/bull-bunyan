@@ -1,0 +1,7 @@
+GET http://localhost:1234/users/a
+Authorization: Bearer lmalmsaKVNAsnlamlnlALsnla
+### 
+GET http://localhost:1234/about
+### 
+GET http://localhost:1234/logs
+Authorization: Bearer Admin

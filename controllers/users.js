@@ -29,9 +29,80 @@ exports.getUserById = (req, res) => {
   } else {
     log.error("Oops user not found");
 
-    return res.json({
+    return res.status(400).json({
       status: false,
       message: "Oops user not found"
+    });
+  }
+};
+
+exports.saveUserImage = (req, res) => {
+  const log = logger.child({ req });
+  try {
+    if (req.file) {
+      res.json({
+        status: false,
+        message: "File is uploaded",
+        data: req.file
+      });
+    } else {
+      res.status(400).json({
+        status: false,
+        message: "No file is selected"
+      });
+    }
+  } catch (error) {
+    log.info(error);
+
+    return res.status(500).json({
+      status: false,
+      message: error
+    });
+  }
+};
+
+exports.saveUserGallery = (req, res) => {
+  const log = logger.child({ req });
+  try {
+    if (req.files && req.files.length != 0) {
+      res.json({
+        status: false,
+        message: "File is uploaded",
+        data: req.files
+      });
+    } else {
+      res.status(400).json({
+        status: false,
+        message: "No file is selected"
+      });
+    }
+  } catch (error) {
+    log.info(error);
+
+    return res.status(500).json({
+      status: false,
+      message: error
+    });
+  }
+};
+
+exports.addUser = (req, res) => {
+  const log = logger.child({ req });
+
+  try {
+    const image = Buffer.from(req.body.avatar, "base64");
+    
+    res.set({
+      "Content-Type": "image/png",
+      "Content-Length": image.length
+    });
+    res.send(image)
+  } catch (error) {
+    log.info(error);
+
+    return res.status(500).json({
+      status: false,
+      message: error
     });
   }
 };

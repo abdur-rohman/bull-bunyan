@@ -3,7 +3,7 @@
 ### Usage
 
 ```sh 
-touch log/main.log
+touch log/app.log
 npm install
 npm test
 ```

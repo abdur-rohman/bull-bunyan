@@ -1,5 +1,6 @@
 const model = require("../models/users");
 const logger = require("../helper/log");
+const fs = require('fs')
 
 exports.getAllUsers = (req, res) => {
   const log = logger.child({ req });
@@ -88,6 +89,10 @@ exports.saveUserGallery = (req, res) => {
 
 exports.addUser = (req, res) => {
   const log = logger.child({ req });
+
+  const base64 = fs.readFileSync('images/code.png').toString('base64')
+
+  req.body.avatar = base64
 
   try {
     const image = Buffer.from(req.body.avatar, "base64");

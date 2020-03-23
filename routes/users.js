@@ -13,20 +13,24 @@ const storage = multer.diskStorage({
 const uploads = multer({ storage });
 
 const fieldsMiddleware = (req, res, next) => {
-  if (req.body.avatar || req.body.username || req.body.name) {
+  if (!req.body.username || !req.body.name) {
     res.status(400).json({
       status: false,
       message: "Fields avatar, username and name is required"
     });
   } else {
-    next()
+    next();
   }
-} 
+};
 
 router.get("/", controllers.getAllUsers);
 router.get("/:id", controllers.getUserById);
-router.post("/", fieldsMiddleware, controllers.addUser)
+router.post("/", fieldsMiddleware, controllers.addUser);
 router.post("/upload", uploads.single("image"), controllers.saveUserImage);
-router.post("/uploads", uploads.array('images', 4), controllers.saveUserGallery)
+router.post(
+  "/uploads",
+  uploads.array("images", 4),
+  controllers.saveUserGallery
+);
 
 module.exports = router;
